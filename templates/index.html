@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="M3TTS: Multi-Modal Style Control for Expressive Speech Synthesis">
+    <title>M3TTS: Multi-Modal Style Control for Expressive Speech Synthesis</title>
+    <style>
+        /* body {
+            text-align: center;
+        } */
+        .audio-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+        audio {
+            width: 25%;  /* 控制音频宽度，可以根据实际需求调整 */
+        }
+    </style>
+</head> 
+
+<body>
+    <h1 style="font-weight: bold;color: rgb(0, 108, 190);">MOS test for speech synthesis system</h1>
+
+    <!-- <h2>MOS test for speech synthesis system with noisy speech corpus</h2> -->
+    <h2 style="font-weight: bold;color: rgb(0, 190, 168);">Task 1: Audio Quality</h2>
+
+    <h3 style="font-weight: bold;color: rgb(244, 8, 8);">Evaluation Instructions:</h3> 
+
+    <h3 style="font-weight: bold;color: rgb(244, 8, 8);">1.Please choose between 1-5 points. The higher the score, the better the performance.</h3> 
+
+    <h3 style="font-weight: bold;color: rgb(244, 8, 8);">2.Evaluate audio quality from three aspects: : Naturalness, Expressiveness, and Audio-Visual Synchronization</h3> 
+
+    <h3 style="font-weight: bold;color: rgb(244, 8, 8);">3.Naturalness: whether there is noise such as machine sound in the speech; Expressiveness: Richness of speed, rhythm, intonation, etc.  Audio-Visual Synchronization: Ignoring voice quality and style, only focusing on whether the audio matches the video.</h3> 
+
+    <h4>Set Blue In E Two Soon</h4>
+
+
+        <li>5: Excellent, very Naturalness (human speech)</li>
+        <audio controls preload="none">
+            <source src="static/Audio/0.wav" type="audio/wav"> </audio>
+
+        <li>4: Good, Naturalness</li>
+        <audio controls preload="none">
+            <source src="static/Audio/1.wav" type="audio/wav"> </audio>
+        <li>3: Fair, rather Naturalness</li>
+        <audio controls preload="none">
+            <source src="static/Audio/2.wav" type="audio/wav"> </audio>
+        <li>2: Poor, rather unNaturalness (rather robotic)</li>
+        <audio controls preload="none">
+            <source src="static/Audio/3.wav" type="audio/wav"> </audio>
+        <li>1: Bad, very unNaturalness (robotic).</li>
+        <audio controls preload="none">
+            <source src="static/Audio/4.wav" type="audio/wav"> </audio>
+    </ul>
+
+    <br>
+    <form method="GET" , action="thank">
+        <h2 style="font-weight: bold;color: rgb(0, 190, 168);">Could you give us you nickname (without whitespaces)</h2>
+        <input type="text" id="lname" name="lname" pattern="[^\s]*" required>
+        <br>
+        <!-- <h3 style="font-weight: bold;color: rgb(244, 8, 8);">Data has been shuffled includes human and synthesis audio</h3> -->
+        <!-- <h3 style="font-weight: bold;color: rgb(244, 8, 8);">The first audio is synthesis speech, the second one is human voice</h3>  -->
+
+        {% for line in lines %}
+
+        {% set i = loop.index %}
+        {% set y = i-1 %}
+
+        <h4>{{line}}</h4>
+
+        {% if ranlist[y] != 100 %}
+        
+
+        <audio controls preload="none">
+          <source src="static/Truth/{{y}}.wav" type="audio/wav"> </audio>
+
+        <select name="Truth-Naturalness-{{y}}" required>
+            <option value="">Naturalness</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+        </select>
+
+        <select name="Truth-Expressiveness-{{y}}" required>
+            <option value="">Expressiveness</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+        </select>
+
+        <audio controls preload="none">
+          <source src="static/Vocoder/{{y}}.wav" type="audio/wav"> </audio>
+
+
+        <select name="Vocoder-Naturalness-{{y}}" required>
+            <option value="">Naturalness</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+        </select>
+
+        <select name="Vocoder-Expressiveness-{{y}}" required>
+            <option value="">Expressiveness</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+        </select>
+
+
+
+        <audio controls preload="none">
+          <source src="static/T_STYLER/{{y}}.wav" type="audio/wav"> </audio>
+
+
+        <select name="T_STYLER-Naturalness-{{y}}" required>
+            <option value="">Naturalness</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+        </select>
+
+        <select name="T_STYLER-Expressiveness-{{y}}" required>
+            <option value="">Expressiveness</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+        </select>
+
+
+        <audio controls preload="none">
+          <source src="static/FastSpeech2/{{y}}.wav" type="audio/wav"> </audio>
+
+        <select name="FastSpeech2-Naturalness-{{y}}" required>
+            <option value="">Naturalness</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+        </select>
+
+        <select name="FastSpeech2-Expressiveness-{{y}}" required>
+            <option value="">Expressiveness</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+        </select>
+
+
+
+
+        {% else %}
+        <audio controls preload="none">
+            <source src="static/Truth/{{y}}.wav" type="audio/wav"> </audio>
+        <select name="truth-{{y}}" required>
+            <option value="">None</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+        </select>
+
+        <audio controls preload="none">
+            <source src="static/TACO/{{y}}.wav" type="audio/wav"> </audio>
+        <select name="taco-{{y}}" required>
+            <option value="">None</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+        </select>
+        {% endif %}
+
+        {% endfor %}
+
+        <h2 style="font-weight: bold;color: rgb(0, 190, 168);">Task 2: Style Transfer</h2> 
+        
+        <h3 style="font-weight: bold;color: rgb(244, 8, 8);">Evaluation Instructions:</h3> 
+
+        <h3 style="font-weight: bold;color: rgb(244, 8, 8);">1.The first audio is synthesis speech, the second one is Reference Speech 1, the third one is Reference Speech 2</h3> 
+
+        <h3 style="font-weight: bold;color: rgb(244, 8, 8);">2.Choose a speech(1 or 2) that is similar to the synthesized voice style</h3> 
+
+        {% for line in style_lines %}
+
+        {% set i = loop.index %}
+        {% set y = i-1 %}
+
+        <h4>{{line}}</h4>
+
+        {% if stylelist[y] != 100 %}
+
+        <h4 style="font-weight: bold;color: rgb(108, 102, 102);">Style Similarity</h4> 
+
+        <li>Reference Speech 1</li>
+
+        <audio controls preload="none">
+            <source src="static/Style_Sim/ref_1/{{y}}.wav" type="audio/wav"> </audio>
+
+        <li>Reference Speech 2</li>
+
+        <audio controls preload="none">
+            <source src="static/Style_Sim/ref_2/{{y}}.wav" type="audio/wav"> </audio>
+    
+        <li>Synthesized Speech</li>
+
+        <audio controls preload="none">
+            <source src="static/Style_Sim/synthesized/{{y}}.wav" type="audio/wav"> </audio>
+    
+        <select name="Style Similarity-{{y}}" required>
+            <option value="">None</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+
+        </select>
+
+
+
+        <h4 style="font-weight: bold;color: rgb(108, 102, 102);">Speaker Similarity</h4> 
+
+        <li>Reference Speech 1</li>
+
+        <audio controls preload="none">
+            <source src="static/Speaker_Sim/ref_1/{{y}}.wav" type="audio/wav"> </audio>
+
+        <li>Reference Speech 2</li>
+
+        <audio controls preload="none">
+            <source src="static/Speaker_Sim/ref_1/{{y}}.wav" type="audio/wav"> </audio>
+    
+        <li>Synthesized Speech</li>
+
+        <audio controls preload="none">
+            <source src="static/Speaker_Sim/synthesized/{{y}}.wav" type="audio/wav"> </audio>
+    
+            <select name="Speaker Similarity-{{y}}" required>
+                <option value="">None</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+    
+            </select>
+    
+    
+
+        {% else %}
+        <audio controls preload="none">
+            <source src="static/Truth/{{y}}.wav" type="audio/wav"> </audio>
+        <select name="truth-{{y}}" required>
+            <option value="">None</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+        </select>
+
+        <audio controls preload="none">
+            <source src="static/TACO/{{y}}.wav" type="audio/wav"> </audio>
+        <select name="taco-{{y}}" required>
+            <option value="">None</option>
+            <option value="5">5</option>
+            <option value="4">4</option>
+            <option value="3">3</option>
+            <option value="2">2</option>
+            <option value="1">1</option>
+        </select>
+        {% endif %}
+
+        {% endfor %}
+
+        <br>
+        <input type="submit" name="detail_infor" value="Submit">
+
+        <h3 style="font-weight: bold;color: rgb(11, 21, 29);">Thank You for Participating</h3>
+    </form>
+</body>
+
+<!-- <script>
+    var vid = document.getElementById("myVideo");
+    
+    function playVideo() {
+      vid.play();
+    }
+    
+    function pauseVideo() {
+      vid.pause();
+    }
+</script>             -->
+
+</html>
