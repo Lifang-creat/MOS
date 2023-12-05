@@ -11,8 +11,8 @@ import os
 
 
 warnings.filterwarnings("ignore")
-# app = Flask(__name__, static_url_path='/static')
-app = Flask(__name__, static_url_path='/')
+app = Flask(__name__, static_url_path='/static')
+#app = Flask(__name__, static_url_path='/')
 
 @app.route("/", methods=['GET', 'POST'])
 def main():
