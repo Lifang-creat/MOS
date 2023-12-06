@@ -31,7 +31,7 @@ def main():
         stylelist.append(random.randint(3, 90)%2)#生成长度为1的[0,1,1,1,0,0...1,1]
     print(stylelist)
 
-    return render_template('index.html',lines=lines,ranlist=ranlist,style_lines=style_lines, stylelist=stylelist )
+    # return render_template('index.html',lines=lines,ranlist=ranlist,style_lines=style_lines, stylelist=stylelist )
 
 
 @app.route("/thank", methods=['GET', 'POST'])
